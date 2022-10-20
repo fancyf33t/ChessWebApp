@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Topic 
+from .forms import TopicForm, EntryForm
 # Create your views here.
 def index(request):
     """Home page of Chess Base"""
@@ -20,3 +21,38 @@ def topic(request, topic_id):
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'chess_bases/topic.html', context)
+
+# new topic function
+def new_topic(request):
+    if request.method != 'POST':
+        # no data submitted; create blank form
+        form = TopicForm()
+    else:
+        # POST data submitted; process data
+        form = TopicForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('chess_bases:topics')
+    # display a blank or invalid form
+    context = {'form': form}
+    return render(request, 'chess_bases/new_topic.html', context)
+
+# new entry function
+def new_entry(request, topic_id):
+    """Add a new entry for a particular topic"""
+    topic = Topic.objects.get(id=topic_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form
+        form = EntryForm()
+    else:
+        # POST data submitted; process data
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic 
+            new_entry.save()
+            return redirect('chess_bases:topic', topic_id=topic_id)
+    # display a blak or invalid form
+    context = {'topic': topic, 'form': form}
+    return render(request, 'chess_bases/new_entry.html', context)

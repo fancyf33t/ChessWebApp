@@ -1,0 +1,12 @@
+{% extends "chess_bases/base.html" %} 
+
+{% block content %}
+<h3>Add a new topic:</h3>
+
+<form action="{% url 'chess_bases:new_topic' %}" method="post">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <button name="submit">Add topic</button>
+</form>
+
+{% endblock content %} 

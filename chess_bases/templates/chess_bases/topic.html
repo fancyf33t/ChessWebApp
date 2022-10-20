@@ -3,6 +3,9 @@
 {% block content %} 
 <h2>Topic: {{topic}}</h2>
 <p>Entries:</p>
+<p>
+    <a href="{% url 'chess_bases:new_entry' topic.id %}">Add new entry</a>
+</p>
 <ul>
     {% for entry in entries %} 
     <li>
