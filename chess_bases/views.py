@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .models import Topic 
+from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 # Create your views here.
 def index(request):
@@ -56,3 +56,21 @@ def new_entry(request, topic_id):
     # display a blak or invalid form
     context = {'topic': topic, 'form': form}
     return render(request, 'chess_bases/new_entry.html', context)
+
+# edit function
+def edit_entry(request, entry_id):
+    """Edit an existing entry"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic 
+
+    if request.method != 'POST':
+        # initial request; pre-fill form with current entry
+        form = EntryForm(instance=entry)
+    else:
+        # post data submitted; process data
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('chess_bases:topic', topic_id=topic.id)
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    return render(request, 'chess_bases/edit_entry.html', context)

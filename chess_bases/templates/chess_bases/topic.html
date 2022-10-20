@@ -1,20 +1,23 @@
 {% extends 'chess_bases/base.html' %}
 
-{% block content %} 
+{% block content %}
 <h2>Topic: {{topic}}</h2>
 <p>Entries:</p>
 <p>
     <a href="{% url 'chess_bases:new_entry' topic.id %}">Add new entry</a>
 </p>
 <ul>
-    {% for entry in entries %} 
+    {% for entry in entries %}
     <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
         <p>{{ entry.text|linebreaks }}</p>
+        <p>
+            <a href="{% url 'chess_bases:edit_entry' entry.id %}">Edit entry</a>
+        </p>
     </li>
-    {% empty %} 
+    {% empty %}
     <li>There are no entries for this topic yet...</li>
-    {% endfor %} 
+    {% endfor %}
 </ul>
 
-{% endblock content %} 
+{% endblock content %}
