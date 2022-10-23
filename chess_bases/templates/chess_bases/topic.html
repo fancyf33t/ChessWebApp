@@ -1,22 +1,27 @@
 {% extends 'chess_bases/base.html' %}
 
+{% block page_header %} 
+<h2>{{ topic }}</h2>
+{% endblock page_header %} 
+
 {% block content %}
-<h2>Topic: {{topic}}</h2>
-<p>Entries:</p>
 <p>
     <a href="{% url 'chess_bases:new_entry' topic.id %}">Add new entry</a>
 </p>
 <ul>
     {% for entry in entries %}
-    <li>
-        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-        <p>{{ entry.text|linebreaks }}</p>
-        <p>
-            <a href="{% url 'chess_bases:edit_entry' entry.id %}">Edit entry</a>
-        </p>
-    </li>
+    <div class="card mb-3">
+        <h3 class="card-header">
+            {{ entry.date_added|date:'M d, Y H:i' }}
+            <small><a href="{% url 'chess_bases:edit_entry' entry.id %}"></a></small>
+        </h3>
+        <div class="card-body">
+            {{ entry.text|linebreaks }}
+        </div>
+    </div>
     {% empty %}
-    <li>There are no entries for this topic yet...</li>
+    
+    <p>There are no entries for this topic yet...</p>
     {% endfor %}
 </ul>
 

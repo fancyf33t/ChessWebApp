@@ -1,19 +1,29 @@
 {% extends "chess_bases/base.html" %}
 
+{% block page_header %}
+<h2>Topics</h2>
+{% endblock page_header %}
+
 {% block content %}
 
-    <h2>Topics</h2>
+<h2>Topics</h2>
 
-    <ul>
-        <!-- create forLoop to display all topics -->
-        {% for topic in topics %}
-        <!-- <li>{{topic}}</li> -->
-        <li>
+<ul>
+    <!-- create forLoop to display all topics -->
+    {% for topic in topics %}
+    <!-- <li>{{topic}}</li> -->
+    <li>
+        <h3>
             <a href="{% url 'chess_bases:topic' topic.id %}">{{topic}}</a>
-        </li>
-        {% empty %}
-        <li>No topics have been added yet...</li>
-        {% endfor %} 
-    </ul>
-    <a href="{% url 'chess_bases:new_topic' %}">Add a new topic</a>
+        </h3>
+    </li>
+    {% empty %}
+    <li>
+        <h3>
+            No topics have been added yet...
+        </h3>
+    </li>
+    {% endfor %}
+</ul>
+<h3><a href="{% url 'chess_bases:new_topic' %}">Add a new topic</a></h3>
 {% endblock content %}

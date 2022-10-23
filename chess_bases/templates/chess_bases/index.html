@@ -1,6 +1,9 @@
 {% extends "chess_bases/base.html" %}
 
-{% block content %} 
-<h1>Chess Base</h1>
-<p><em>Where all of the knowledge of chess is stored</em></p>
-{% endblock content %}
+{% block page_header %}
+<div class="jumbotron">
+    <h1 class="display-3">Track your chess knowledge</h1>
+    <p class="lead">Learn something new about chess? Use this to keep a list of tips and tricks. Whenever you learn something new about a topic, make an entry summarizing what you've learned.</p>
+    <a href="{% url 'users:register' %}" role="button" class="btn btn-lg btn-primary">Register &raquo</a>
+</div>
+{% endblock page_header %}

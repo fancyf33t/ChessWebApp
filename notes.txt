@@ -1,0 +1,24 @@
++====================+
+| Removed code/edits |
++====================+
+"In order to style with bootstrap4, code must be removed from base.html to make a better looking template"
+<p>
+    <a href="{% url 'chess_bases:index' %}">Chess Base</a> -
+    <a href="{% url 'chess_bases:topics' %}">Topics</a> - 
+    {% if user.is_authenticated %} 
+        Hello, {{ user.username }}.
+        <a href="{% url 'users:logout' %}">Log out</a>
+    {% else %}
+        <a href="{% url 'users:register' %}">Register</a>
+        <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
+</p>
+
+{% block content %}{% endblock content %} 
+
+
+"Removed from index.html"
+{% block content %} 
+<h1>Chess Base</h1>
+<p><em>Where all of the knowledge of chess is stored</em></p>
+{% endblock content %}
